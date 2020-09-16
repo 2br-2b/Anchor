@@ -4,6 +4,27 @@ var depthStart;
 
 var init = function(){
 
+	var active_urls;
+	var DEFAULT_URLS=["www.reddit.com", "www.youtube.com"];
+
+	chrome.storage.sync.get(["active_urls"], function(result) {
+		console.log(result.active_urls);
+		if(result.active_urls == null){
+			active_urls = DEFAULT_URLS;
+			chrome.storage.sync.set({"active_urls": active_urls}, function() {
+				// console.log("Value is set to : + value);
+			});
+		}else{
+			active_urls = result.active_urls;
+			// console.log("Value currently is " + active_urls);
+		}
+	});
+
+	if(!active_urls.includes(document.location.host)){
+		return;
+	}
+
+
 	depthBottomPixel = meterToPixel(depthBottomMeters);
 	depthStart = depthBottomPixel - meterToPixel(depthBottomMeters * 0.4);
 
@@ -97,8 +118,8 @@ function loadCreatures(){
 }
 
 chrome.runtime.sendMessage({type: "status"}, function(response) {
-    if(response.status == 1) init();
-    return;
+	if(response.status == 1) init();
+	return;
 });
 
 
