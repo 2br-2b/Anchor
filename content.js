@@ -8,7 +8,7 @@ var init = function(){
     var DEFAULT_URLS=["www.reddit.com", "www.youtube.com"];
 
     chrome.storage.sync.get(["active_urls"], function(result) {
-        console.log(result.active_urls);
+        // console.log(result.active_urls);
         if(result.active_urls == null){
             active_urls = DEFAULT_URLS;
             chrome.storage.sync.set({"active_urls": active_urls}, function() {
