@@ -131,22 +131,22 @@
 }
 
 @keyframes swim {
-  from {transform: translate(120vw,0%);}
-  to {transform: translate(0vw, 0%);}
+    from {transform: translate(120vw,0%);}
+    to   {transform: translate(0vw, 0%);}
 }
 
 @keyframes swim2 {
-  from {transform: translate(0vw, 0%) rotateY(180deg);}
-  to {transform: translate(120vw, 0%) rotateY(180deg);}
+    from {transform: translate(0vw, 0%) rotateY(180deg);}
+    to   {transform: translate(120vw, 0%) rotateY(180deg);}
 }
 
 @keyframes swimwhale {
-  from {transform: translate(0vw, 0%) rotateY(180deg);}
-  to {transform: translate(180vw, 0%) rotateY(180deg);}
+    from {transform: translate(0vw, 0%) rotateY(180deg);}
+    to   {transform: translate(180vw, 0%) rotateY(180deg);}
 }
 
 @keyframes jelly {
-  0% {transform: translate(0vw, 0vh);}
-  50% {transform: translate(0vw, 5vh);}
-  100% {transform: translate(0vw, 0vh);}
+    0%   {transform: translate(0vw, 0vh);}
+    50%  {transform: translate(0vw, 5vh);}
+    100% {transform: translate(0vw, 0vh);}
 }
