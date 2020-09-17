@@ -15,7 +15,7 @@ chrome.storage.sync.get(["active_urls"], function (result) {
     if (the_active_urls.includes(document.location.host)) {
         // The url is not already in the list, so add it
         console.log("Removing url " + document.location.host)
-        
+
         index = the_active_urls.indexOf(document.location.host);
         if (index > -1) {
             the_active_urls.splice(index, 1);
@@ -32,5 +32,7 @@ chrome.storage.sync.get(["active_urls"], function (result) {
     chrome.storage.sync.set({"active_urls": the_active_urls}, function () {
         console.log("Set active urls: " + the_active_urls);
     });
+
+    window.location.reload();
 
 })
