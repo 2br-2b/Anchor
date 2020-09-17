@@ -4,13 +4,8 @@ The infinite scroll. It's dangerously easy to scroll mindlessly for hours, espec
  
 So what if we playfully visualised infinite scrolling as a deep sea dive, to help people experience their scrolling habit more tangibly?
  
-Anchor is a simple Chrome extension which plays on this feeling of sinking. The further down you scroll, the deeper you dive — and you can watch as your screen slowly turns a dark blue, a little fish swims across your screen, and finally, you hit a (literal) rock bottom.
+Anchor is a simple Chromium extension (meaning it works on Brave, Opera, Vivaldi, Google Chrome, and more!) which plays on this feeling of sinking. The further down you scroll, the deeper you dive — and you can watch as your screen slowly turns a dark blue, a little fish swims across your screen, and finally, you hit a (literal) rock bottom.
  
-We're thinking this could be easily adapted and expanded (by you!) into a whole series of scrolling experiments. Think cave exploring, parachuting, digging to the center of the Earth... All our code is available on [GitHub](https://github.com/benjchan/Anchor) for you to play with and evolve.
+I'm expanding [the original project](https://experiments.withgoogle.com/anchor) by [Brendan Browne-Adams](https://www.brendanbrownedesigns.com/), [Lahari Goswami](https://laharigoswami.cargo.site), [Miki Chiu](https://www.mikichiu.com), [Tayo Kopfer](https://tayo.co.za), and [Twomuch Studio](https://twomuch.studio) to add additional functionality. Part of the beauty of the origional extension is its simplicity, and I will try to maintain it as much as I can.
 
-Project created by:
-* [Brendan Browne-Adams](https://www.brendanbrownedesigns.com/)
-* [Lahari Goswami](https://laharigoswami.cargo.site)
-* [Miki Chiu](https://www.mikichiu.com)
-* [Tayo Kopfer](https://tayo.co.za)
-* [Twomuch Studio](https://twomuch.studio)
+Feel free to suggest any changes or open any issues for ideas you want implemented!
