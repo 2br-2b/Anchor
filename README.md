@@ -9,3 +9,5 @@ Anchor is a simple Chromium extension (meaning it works on Brave, Opera, Vivaldi
 I'm expanding [the original project](https://experiments.withgoogle.com/anchor) by [Brendan Browne-Adams](https://www.brendanbrownedesigns.com/), [Lahari Goswami](https://laharigoswami.cargo.site), [Miki Chiu](https://www.mikichiu.com), [Tayo Kopfer](https://tayo.co.za), and [Twomuch Studio](https://twomuch.studio) to add additional functionality. Part of the beauty of the origional extension is its simplicity, and I will try to maintain it as much as I can.
 
 Feel free to suggest any changes or open any issues for ideas you want implemented!
+
+To install the extension, check out the instructions in [the installation file](INSTALLATION.md)!
