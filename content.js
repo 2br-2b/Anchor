@@ -1,4 +1,3 @@
-var depthBottomMeters = 10; //Depth in meters
 var depthBottomPixel;
 var depthStart;
 
@@ -8,7 +7,9 @@ var init = function () {
     var DEFAULT_URLS = ["www.reddit.com", "www.youtube.com", "www.google.com"];
     var the_active_urls;
     chrome.storage.sync.get(["active_urls"], function (result) {
-        console.log(result.active_urls);
+        console.log(result)
+
+        // Check if the current page is in the list of current urls
         if (result.active_urls == null) {
             the_active_urls = DEFAULT_URLS;
             chrome.storage.sync.set({"active_urls": the_active_urls}, function () {
@@ -19,71 +20,71 @@ var init = function () {
             console.log("Loaded active urls: " + the_active_urls);
         }
 
-
-
-        console.log("active urls: " + the_active_urls);
-
-
-
         if (!the_active_urls.includes(document.location.host)) {
             return;
         }
 
-        depthBottomPixel = meterToPixel(depthBottomMeters);
-        depthStart = depthBottomPixel - meterToPixel(depthBottomMeters * 0.4);
+        chrome.storage.sync.get(["max_depth"], function (max) {
 
-        // Create elements
-        $("body").append('<div class="anchor"></div>');
-        $(".anchor").append('<div class="creatures"></div>');
-        $(".anchor").append('<div class="sea"></div>');
-        $(".anchor").append('<div class="depth"><div class="depth--line"></div><div class="depth--line"></div><div class="depth--line"></div><div class="depth--line"></div><div class="depth--line"></div></div>');
-        $(".anchor").append('<div class="depth--marker"><div class="marker"><span>0m</span></div></div>');
+            max_depth = max.max_depth;
+            if (max_depth == null) max_depth = 10;
 
-        loadCreatures();
+            depthBottomPixel = meterToPixel(max_depth);
+            depthStart = depthBottomPixel - meterToPixel(max_depth * 0.4);
 
-        $(window).scroll(function (e) {
+            // Create elements
+            $("body").append('<div class="anchor"></div>');
+            $(".anchor").append('<div class="creatures"></div>');
+            $(".anchor").append('<div class="sea"></div>');
+            $(".anchor").append('<div class="depth"><div class="depth--line"></div><div class="depth--line"></div><div class="depth--line"></div><div class="depth--line"></div><div class="depth--line"></div></div>');
+            $(".anchor").append('<div class="depth--marker"><div class="marker"><span>0m</span></div></div>');
 
-            var s = $("body, html").scrollTop();
-            var docHeight = document.body.scrollHeight;
+            loadCreatures();
 
-            if ($(".anchor").outerHeight() != docHeight) {
-                $(".anchor").css({"height": docHeight + "px"});
-            }
-            var progress = (s - depthStart) / (depthBottomPixel - depthStart);
-            if (progress <= 0) {
-                $(".sea").css({"opacity": 0});
-            } else if (progress <= 1) {
-                // set sea opacity
-                $(".sea").css({"opacity": progress});
-            } else {
-                // Prevent further scrolling
-                e.preventDefault();
-                $("body, html").scrollTop(depthBottomPixel);
-                $(".sea").css({"opacity": 1});
-            }
+            $(window).scroll(function (e) {
 
+                var s = $("body, html").scrollTop();
+                var docHeight = document.body.scrollHeight;
 
-            // set marker position
-            var markerProgress = (s / depthBottomPixel);
-            if (markerProgress < 0) {
-                markerProgress = 0;
-            }
-            if (markerProgress > 0.9 && $(".rock").length == 0) {
-                $(".anchor").append('<svg class="rock" width="1333px" height="291px" viewBox="0 0 1333 291" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Desktop-HD" transform="translate(-34.000000, -705.000000)" fill="#D8D8D8"><path d="M34,937.037871 L102.36719,782.763552 L195.974042,782.763552 L262.011649,859.900712 L396.492082,907.191989 L396.492082,949.404322 L262.011649,995.171538 L34,982.517914 L34,937.037871 Z M1216.41445,817.476134 L1136.52101,875.733964 L1089.01915,848.308754 L1078.10749,789.816737 L1023.71941,726.417772 L1036.0869,704.996645 L1117.73953,721.172024 L1229.73933,794.396771 L1216.41445,817.476134 Z M837.058065,952.238533 L982.51325,858.382082 L1132.35531,905.310308 L1132.35531,983.688137 L837.058065,952.238533 Z M549,861.613678 L698.562209,810 L782.472553,862.707043 L782.472553,981.125972 L634.21128,995.171538 L549,940.751588 L549,861.613678 Z M834.207142,798.121399 L915.213072,719.153854 L972.273831,758.637627 L972.273831,830.188964 L875.829517,858.382082 L817,830.188964 L834.207142,798.121399 Z M434.090409,903.686877 L387.590849,800.557712 L444.209388,760.442383 L511.445651,784.914382 L504.952619,885.185007 L458.338873,930.824055 L434.090409,903.686877 Z M1276.35036,837.894431 L1367.0178,905.549797 L1336.94641,968.084667 L1266.27598,979.277762 L1223.34276,888.431213 L1241.98581,825.91561 L1276.35036,837.894431 Z" id="Combined-Shape"></path></g></g></svg>');
-                $(".rock").css({"top": (depthBottomPixel + window.innerHeight) + "px"});
-            }
-            if (markerProgress > 1) {
-                markerProgress = 1;
-            }
-            var pos = markerProgress * (window.innerHeight - 60);
-            $(".marker").css({"transform": "translate(0, " + pos + "px)"});
+                if ($(".anchor").outerHeight() != docHeight) {
+                    $(".anchor").css({"height": docHeight + "px"});
+                }
+                var progress = (s - depthStart) / (depthBottomPixel - depthStart);
+                if (progress <= 0) {
+                    $(".sea").css({"opacity": 0});
+                } else if (progress <= 1) {
+                    // set sea opacity
+                    $(".sea").css({"opacity": progress});
+                } else {
+                    // Prevent further scrolling
+                    e.preventDefault();
+                    $("body, html").scrollTop(depthBottomPixel);
+                    $(".sea").css({"opacity": 1});
+                }
 
 
-            // Using 96DPI
-            var m = Math.round((s / 96) * 2.54) / 100;
-            $(".marker span").text(m + 'm');
-        });
+                // set marker position
+                var markerProgress = (s / depthBottomPixel);
+                if (markerProgress < 0) {
+                    markerProgress = 0;
+                }
+                if (markerProgress > 0.9 && $(".rock").length == 0) {
+                    $(".anchor").append('<svg class="rock" width="1333px" height="291px" viewBox="0 0 1333 291" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Desktop-HD" transform="translate(-34.000000, -705.000000)" fill="#D8D8D8"><path d="M34,937.037871 L102.36719,782.763552 L195.974042,782.763552 L262.011649,859.900712 L396.492082,907.191989 L396.492082,949.404322 L262.011649,995.171538 L34,982.517914 L34,937.037871 Z M1216.41445,817.476134 L1136.52101,875.733964 L1089.01915,848.308754 L1078.10749,789.816737 L1023.71941,726.417772 L1036.0869,704.996645 L1117.73953,721.172024 L1229.73933,794.396771 L1216.41445,817.476134 Z M837.058065,952.238533 L982.51325,858.382082 L1132.35531,905.310308 L1132.35531,983.688137 L837.058065,952.238533 Z M549,861.613678 L698.562209,810 L782.472553,862.707043 L782.472553,981.125972 L634.21128,995.171538 L549,940.751588 L549,861.613678 Z M834.207142,798.121399 L915.213072,719.153854 L972.273831,758.637627 L972.273831,830.188964 L875.829517,858.382082 L817,830.188964 L834.207142,798.121399 Z M434.090409,903.686877 L387.590849,800.557712 L444.209388,760.442383 L511.445651,784.914382 L504.952619,885.185007 L458.338873,930.824055 L434.090409,903.686877 Z M1276.35036,837.894431 L1367.0178,905.549797 L1336.94641,968.084667 L1266.27598,979.277762 L1223.34276,888.431213 L1241.98581,825.91561 L1276.35036,837.894431 Z" id="Combined-Shape"></path></g></g></svg>');
+                    $(".rock").css({"top": (depthBottomPixel + window.innerHeight) + "px"});
+                }
+                if (markerProgress > 1) {
+                    markerProgress = 1;
+                }
+                var pos = markerProgress * (window.innerHeight - 60);
+                $(".marker").css({"transform": "translate(0, " + pos + "px)"});
 
+
+                // Using 96DPI
+                var m = Math.round((s / 96) * 2.54) / 100;
+                $(".marker span").text(m + 'm');
+            });
+
+        })
     })
 
 

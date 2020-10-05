@@ -1,35 +1,37 @@
 {
-    "manifest_version":2,
-    "name":"Anchor",
-    "version":"1.0.0",
-    "icons":{
-        "128":"icon.png"
+    "manifest_version": 2,
+    "name": "Anchor",
+    "version": "1.0.0",
+    "icons": {
+        "128": "icon.png"
     },
-    "content_scripts":[
+    "content_scripts": [
         {
-            "matches":[
+            "matches": [
                 "<all_urls>"
             ],
-            "js":[
+            "js": [
                 "jquery-3.2.1.js",
                 "content.js"
             ],
-            "css":[
+            "css": [
                 "main.css"
             ]
         }
     ],
-    "permissions":[
+    "permissions": [
         "activeTab",
-        "storage"
+        "storage",
+        "tabs"
     ],
-    "browser_action":{
+    "browser_action": {
+        "default_popup": "popup.html",
         "default_icon": "icon.png"
     },
-    "background":{
-        "scripts":[
+    "background": {
+        "scripts": [
             "background.js"
         ],
-        "persistent":true
+        "persistent": true
     }
 }

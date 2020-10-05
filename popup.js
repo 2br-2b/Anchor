@@ -1,33 +1,84 @@
-if (!localStorage.status) localStorage['status'] = 1;
-if (localStorage.status == 1) {
-    $("#anchor--toggle input").prop("checked", true);
-    $("#anchor--toggle label span").text("on");
-} else {
-    $("#anchor--toggle input").prop("checked", false);
-    $("#anchor--toggle label span").text("off");
-}
-$("#anchor--toggle").mousedown(function () {
-    if ($("#anchor--input").is(":checked")) {
-        localStorage.status = 0;
-        $("#anchor--toggle label span").text("off");
-        chrome.tabs.reload();
-    } else {
-        localStorage.status = 1;
-        $("#anchor--toggle label span").text("on");
-        chrome.tabs.reload();
+if (!localStorage.max_depth) localStorage['max_depth'] = 10;
+
+save_changes_button.onclick = function () {
+    var new_depth = document.getElementById("max_depth").value;
+
+    if (new_depth <= 0) {
+        alert("Please enter a valid depth!");
+        return;
     }
-});
+    chrome.storage.sync.set({"max_depth": new_depth}, function () {
+        reload_page();
+    });
 
-$('body').on('click', 'a', function () {
-    chrome.tabs.create({url: $(this).attr('href')});
-    return false;
-});
+};
 
-$("#anchor--info label").mousedown(function () {
-    $("#anchor--info label").addClass("button--clicked");
-    setTimeout(function () {
-        $("#anchor--info label").removeClass("button--clicked");
-    }, 100);
-    $("body").toggleClass("info--open");
-});
 
+
+
+toggle_whitelist.onclick = function () {
+    var the_active_urls;
+
+    chrome.storage.sync.get(["active_urls"], function (result) {
+
+        chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
+            var current_tab = tabs[0];
+            var domain_name = current_tab.url.split("/")[2];
+
+            console.log(domain_name);
+
+            if (result.active_urls == null) {
+                the_active_urls = [];
+                chrome.storage.sync.set({"active_urls": the_active_urls}, function () {
+                    console.log("Couldn't find active urls, so set active urls to: " + the_active_urls);
+                });
+            } else {
+                the_active_urls = result.active_urls;
+                console.log("Loaded active urls: " + the_active_urls);
+            }
+
+            if (the_active_urls.includes(domain_name)) {
+                // The url is not already in the list, so add it
+                console.log("Removing url " + domain_name)
+
+                index = the_active_urls.indexOf(domain_name);
+                if (index > -1) {
+                    the_active_urls.splice(index, 1);
+                }
+
+            } else {
+                // The url is already in the list, so remove it
+                console.log("Adding url " + domain_name)
+                the_active_urls.push(domain_name)
+            }
+
+
+
+            chrome.storage.sync.set({"active_urls": the_active_urls}, function () {
+                console.log("Set active urls: " + the_active_urls);
+            });
+
+
+
+            reload_page();
+
+
+
+
+        });
+
+
+        /**/
+
+    })
+};
+
+
+reload_page = function () {
+    chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
+        chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
+            var current_tab = tabs[0];
+            chrome.tabs.update(current_tab.id, {url: current_tab.url})
+        })
+    });
+}
