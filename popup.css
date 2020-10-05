@@ -1,9 +1,16 @@
-
-body, html{
+body{
     margin: 0;
     width: 344px;
     transition: height 0.5s;
     font-size: 14px;
-    font-family: "Helvetica", "Arial", sans-serif !important;
+    font-family: "Verdana", "Helvetica", "Arial", sans-serif !important;
     text-align: center;
+    background-color: #074c96;
+    color: #ffffff;
+    margin-bottom: 7;
+}
+
+h1{
+    color: #ffffff;
+    margin-top: 11px;
 }
