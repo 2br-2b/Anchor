@@ -1,4 +1,22 @@
-toggle_whitelist.onclick = function (element) {
+if (!localStorage.max_depth) localStorage['max_depth'] = 10;
+
+save_changes_button.onclick = function () {
+    var new_depth = document.getElementById("max_depth").value;
+
+    if (new_depth <= 0) {
+        alert("Please enter a valid depth!");
+        return;
+    }
+    chrome.storage.sync.set({"max_depth": new_depth}, function () {
+        reload_page();
+    });
+
+};
+
+
+
+
+toggle_whitelist.onclick = function () {
     var the_active_urls;
 
     chrome.storage.sync.get(["active_urls"], function (result) {
@@ -42,7 +60,7 @@ toggle_whitelist.onclick = function (element) {
 
 
 
-            chrome.tabs.update(current_tab.id, {url: current_tab.url})
+            reload_page();
 
 
 
@@ -54,3 +72,13 @@ toggle_whitelist.onclick = function (element) {
 
     })
 };
+
+
+reload_page = function () {
+    chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
+        chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
+            var current_tab = tabs[0];
+            chrome.tabs.update(current_tab.id, {url: current_tab.url})
+        })
+    });
+}
