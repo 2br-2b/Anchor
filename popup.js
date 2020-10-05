@@ -15,6 +15,11 @@ save_changes_button.onclick = function () {
 
 
 
+chrome.storage.sync.get(["max_depth"], function (max) {
+    max_depth.value = (max.max_depth == null) ? 10 : max.max_depth;
+});
+
+
 
 toggle_whitelist.onclick = function () {
     var the_active_urls;

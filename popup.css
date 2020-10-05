@@ -14,3 +14,7 @@ h1{
     color: #ffffff;
     margin-top: 11px;
 }
+
+input{
+    text-align: right;
+}
