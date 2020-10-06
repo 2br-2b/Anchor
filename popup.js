@@ -80,10 +80,10 @@ toggle_whitelist.onclick = function () {
 
 
 reload_page = function () {
-    chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
-        chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
-            var current_tab = tabs[0];
-            chrome.tabs.update(current_tab.id, {url: current_tab.url})
-        })
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+        // console.log(tabs);
+        chrome.tabs.update(tabs[0].id, {url: tabs[0].url});
+        // console.log("Reloaded the page");
     });
+
 }
