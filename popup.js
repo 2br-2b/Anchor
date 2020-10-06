@@ -57,24 +57,11 @@ toggle_whitelist.onclick = function () {
                 the_active_urls.push(domain_name)
             }
 
-
-
             chrome.storage.sync.set({"active_urls": the_active_urls}, function () {
                 console.log("Set active urls: " + the_active_urls);
+                reload_page();
             });
-
-
-
-            reload_page();
-
-
-
-
         });
-
-
-        /**/
-
     })
 };
 
