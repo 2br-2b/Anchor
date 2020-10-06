@@ -1,4 +1,4 @@
-if (!localStorage.max_depth) localStorage['max_depth'] = 10;
+if (!localStorage.max_depth) localStorage['max_depth'] = 5;
 
 save_changes_button.onclick = function () {
     var new_depth = document.getElementById("max_depth").value;
