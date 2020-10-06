@@ -1,5 +1,14 @@
+//Set the default maximum depth to 5
 if (!localStorage.max_depth) localStorage['max_depth'] = 5;
 
+
+// Populate the Max depth field
+chrome.storage.sync.get(["max_depth"], function (max) {
+    max_depth.value = (max.max_depth == null) ? 5 : max.max_depth;
+});
+
+
+// Code for when "Save changes" is pressed
 save_changes_button.onclick = function () {
     var new_depth = document.getElementById("max_depth").value;
 
@@ -14,26 +23,23 @@ save_changes_button.onclick = function () {
 };
 
 
-
-chrome.storage.sync.get(["max_depth"], function (max) {
-    max_depth.value = (max.max_depth == null) ? 10 : max.max_depth;
-});
-
-
-
+//When the Toggle Whitelist button is clicked
 toggle_whitelist.onclick = function () {
     var the_active_urls;
 
     chrome.storage.sync.get(["active_urls"], function (result) {
 
         chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
+            // Get the domain name
             var current_tab = tabs[0];
             var domain_name = current_tab.url.split("/")[2];
 
             console.log(domain_name);
 
+            // If there isn't already a list of active urls, create it
             if (result.active_urls == null) {
-                the_active_urls = [];
+                the_active_urls = ["www.reddit.com", "www.youtube.com", "www.google.com"];
+
                 chrome.storage.sync.set({"active_urls": the_active_urls}, function () {
                     console.log("Couldn't find active urls, so set active urls to: " + the_active_urls);
                 });
@@ -57,6 +63,7 @@ toggle_whitelist.onclick = function () {
                 the_active_urls.push(domain_name)
             }
 
+            // Save the active url list
             chrome.storage.sync.set({"active_urls": the_active_urls}, function () {
                 console.log("Set active urls: " + the_active_urls);
                 reload_page();

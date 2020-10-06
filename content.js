@@ -9,7 +9,8 @@ var init = function () {
     chrome.storage.sync.get(["active_urls"], function (result) {
         console.log(result)
 
-        // Check if the current page is in the list of current urls
+        // Check if there is already a list of urls to activate the page on.
+        // If there isn't one, store the default list
         if (result.active_urls == null) {
             the_active_urls = DEFAULT_URLS;
             chrome.storage.sync.set({"active_urls": the_active_urls}, function () {
@@ -20,15 +21,15 @@ var init = function () {
             console.log("Loaded active urls: " + the_active_urls);
         }
 
+        // If the app isn't in the list of urls, don't continue
         if (!the_active_urls.includes(document.location.host)) {
             return;
         }
 
         chrome.storage.sync.get(["max_depth"], function (max) {
 
-            max_depth = max.max_depth;
-            if (max_depth == null) max_depth = 10;
-
+            // Get the maximum depth
+            max_depth = (max_depth == null) ? 5 : max.max_depth;
             depthBottomPixel = meterToPixel(max_depth);
             depthStart = depthBottomPixel - meterToPixel(max_depth * 0.4);
 
@@ -39,6 +40,7 @@ var init = function () {
             $(".anchor").append('<div class="depth"><div class="depth--line"></div><div class="depth--line"></div><div class="depth--line"></div><div class="depth--line"></div><div class="depth--line"></div></div>');
             $(".anchor").append('<div class="depth--marker"><div class="marker"><span>0m</span></div></div>');
 
+            // Create and load the sea creatures
             loadCreatures();
 
             $(window).scroll(function (e) {
@@ -53,7 +55,7 @@ var init = function () {
                 if (progress <= 0) {
                     $(".sea").css({"opacity": 0});
                 } else if (progress <= 1) {
-                    // set sea opacity
+                    // Set sea opacity
                     $(".sea").css({"opacity": progress});
                 } else {
                     // Prevent further scrolling
@@ -63,7 +65,7 @@ var init = function () {
                 }
 
 
-                // set marker position
+                // Set marker position
                 var markerProgress = (s / depthBottomPixel);
                 if (markerProgress < 0) {
                     markerProgress = 0;
