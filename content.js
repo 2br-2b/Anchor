@@ -29,7 +29,9 @@ var init = function () {
         chrome.storage.sync.get(["max_depth"], function (max) {
 
             // Get the maximum depth
-            max_depth = (max_depth == null) ? 5 : max.max_depth;
+
+            max_depth = (max.max_depth == null) ? 5 : max.max_depth;
+
             depthBottomPixel = meterToPixel(max_depth);
             depthStart = depthBottomPixel - meterToPixel(max_depth * 0.4);
 
