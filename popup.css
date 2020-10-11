@@ -1,20 +1,25 @@
-body{
-    margin: 0;
-    width: 344px;
-    transition: height 0.5s;
-    font-size: 14px;
-    font-family: "Verdana", "Helvetica", "Arial", sans-serif !important;
-    text-align: center;
-    background-color: #074c96;
-    color: #ffffff;
-    margin-bottom: 7;
+body {
+  margin: 0;
+  width: 344px;
+  transition: height 0.5s;
+  font-size: 14px;
+  font-family: "Verdana", "Helvetica", "Arial", sans-serif !important;
+  text-align: center;
+  background-color: #074c96;
+  color: #ffffff;
+  margin-bottom: 7;
 }
 
-h1{
-    color: #ffffff;
-    margin-top: 11px;
+h1 {
+  color: #ffffff;
+  margin-top: 11px;
 }
 
-input{
-    text-align: right;
+input {
+  text-align: right;
+}
+
+textarea {
+  width: 270px;
+  height: 100px;
 }

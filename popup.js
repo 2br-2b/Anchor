@@ -2,11 +2,19 @@
 if (!localStorage.max_depth) localStorage['max_depth'] = 5;
 
 
-// Populate the Max depth field
+// Populate the max depth field
 chrome.storage.sync.get(["max_depth"], function (max) {
     max_depth.value = (max.max_depth == null) ? 5 : max.max_depth;
 });
 
+// Populate the urls field
+chrome.storage.sync.get(["active_urls"], function (result) {
+    var formatted_string = "";
+    for (var i = 0; i < result.active_urls.length; i++) {
+        formatted_string += result.active_urls[i] + "\n";
+    }
+    document.getElementById("urls").value = (result.active_urls == null) ? "ERROR" : formatted_string.slice(0, -1);
+});
 
 // Code for when "Save changes" is pressed
 save_changes_button.onclick = function () {
@@ -16,9 +24,17 @@ save_changes_button.onclick = function () {
         alert("Please enter a valid depth!");
         return;
     }
+
+
+    active_urls_field = document.getElementById("urls").value.split("\n");
+    chrome.storage.sync.set({"active_urls": active_urls_field}, function () {});
+
+
     chrome.storage.sync.set({"max_depth": new_depth}, function () {
         reload_page();
+        window.close();
     });
+
 
 };
 
@@ -67,6 +83,7 @@ toggle_whitelist.onclick = function () {
             chrome.storage.sync.set({"active_urls": the_active_urls}, function () {
                 console.log("Set active urls: " + the_active_urls);
                 reload_page();
+                window.close();
             });
         });
     })
