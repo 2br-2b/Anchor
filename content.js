@@ -26,6 +26,20 @@ var init = function () {
             return;
         }
 
+        /*
+
+        // If the app isn't in the list of urls, don't continue
+        var in_the_list = false;
+        for (var i = 0; i < active_urls.length; i++) {
+            if (active_urls[i].test(window.location.href)) {
+                in_the_list = true;
+                break;
+            }
+        }
+        if (!in_the_list) return;
+
+        */
+
         chrome.storage.sync.get(["max_depth"], function (max) {
 
             // Get the maximum depth
