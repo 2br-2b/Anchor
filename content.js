@@ -6,14 +6,14 @@ var init = function () {
 
     var DEFAULT_URLS = ["www.reddit.com", "www.youtube.com", "www.facebook.com", "www.onemilescroll.com", "the100meterscroll.com", "worlds-highest-website.com", "www.instagram.com", "www.pinterest.com"];
     var the_active_urls;
-    chrome.storage.sync.get(["active_urls"], function (result) {
+    chrome.storage.local.get(["active_urls"], function (result) {
         console.log(result)
 
         // Check if there is already a list of urls to activate the page on.
         // If there isn't one, store the default list
         if (result.active_urls == null) {
             the_active_urls = DEFAULT_URLS;
-            chrome.storage.sync.set({"active_urls": the_active_urls}, function () {
+            chrome.storage.local.set({"active_urls": the_active_urls}, function () {
                 console.log("Couldn't find active urls: " + the_active_urls);
             });
         } else {
@@ -26,7 +26,7 @@ var init = function () {
             return;
         }
 
-        chrome.storage.sync.get(["max_depth"], function (max) {
+        chrome.storage.local.get(["max_depth"], function (max) {
 
             // Get the maximum depth
 
