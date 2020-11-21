@@ -15,5 +15,6 @@ I'm expanding [the original project](https://experiments.withgoogle.com/anchor) 
 ## Installation
 
 https://chrome.google.com/webstore/detail/anchor/edefjkgbhajbmjkkclpacaelombcdiik/
+https://addons.mozilla.org/en-US/firefox/addon/scroll-anchor/
 
 To install the extension, check out the instructions in [the installation file](INSTALLATION.md)!
