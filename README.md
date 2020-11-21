@@ -14,7 +14,4 @@ I'm expanding [the original project](https://experiments.withgoogle.com/anchor) 
 
 ## Installation
 
-https://chrome.google.com/webstore/detail/anchor/edefjkgbhajbmjkkclpacaelombcdiik/
-https://addons.mozilla.org/en-US/firefox/addon/scroll-anchor/
-
-To install the extension, check out the instructions in [the installation file](INSTALLATION.md)!
+Install from [the Chrome Web Store](https://chrome.google.com/webstore/detail/anchor/edefjkgbhajbmjkkclpacaelombcdiik/) or [the Firefox Addons Gallery](https://addons.mozilla.org/en-US/firefox/addon/scroll-anchor/). That, or follow the instructions in [the installation file](INSTALLATION.md).
