@@ -4,7 +4,7 @@ var depthStart;
 var init = function () {
 
 
-    var DEFAULT_URLS = ["www.reddit.com", "www.youtube.com", "www.google.com"];
+    var DEFAULT_URLS = ["www.reddit.com", "www.youtube.com", "www.facebook.com", "www.onemilescroll.com", "the100meterscroll.com", "worlds-highest-website.com", "www.instagram.com", "www.pinterest.com"];
     var the_active_urls;
     chrome.storage.sync.get(["active_urls"], function (result) {
         console.log(result)

@@ -38,7 +38,7 @@ toggle_whitelist.onclick = function () {
 
             // If there isn't already a list of active urls, create it
             if (result.active_urls == null) {
-                the_active_urls = ["www.reddit.com", "www.youtube.com", "www.google.com"];
+                the_active_urls = ["www.reddit.com", "www.youtube.com", "www.facebook.com", "www.onemilescroll.com", "the100meterscroll.com", "worlds-highest-website.com", "www.instagram.com", "www.pinterest.com"];
 
                 chrome.storage.sync.set({"active_urls": the_active_urls}, function () {
                     console.log("Couldn't find active urls, so set active urls to: " + the_active_urls);
